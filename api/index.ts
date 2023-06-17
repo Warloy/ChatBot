@@ -1,5 +1,5 @@
 import { VercelRequest, VercelResponse } from '@vercel/node'
-import { startVercel } from '..'
+import { startVercel } from '../'
 
 const handler = async (req: VercelRequest, res: VercelResponse) => {
   try {
