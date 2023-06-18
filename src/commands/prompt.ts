@@ -18,7 +18,7 @@ export const prompt = async (ctx: Context, context: string) => {
   else {
 
     const response = await request(context)
-    message = `${firstName}, en respuesta a tu solicitud, ChatGPT dice:\n${response}`
+    message = `${firstName}, en respuesta a tu solicitud, ChatGPT dice:\n\n${response}`
     
   }
 
