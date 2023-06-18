@@ -3,7 +3,9 @@ import { VercelRequest, VercelResponse } from '@vercel/node'
 
 import { development, production } from './core'
 
-import { start, prompt, maid } from './commands'
+import { start, prompt, maid, unknown } from './commands'
+
+import { REGEX } from './utils'
 
 const BOT_TOKEN = process.env.BOT_TOKEN ?? ''
 const ENVIRONMENT = process.env.NODE_ENV ?? ''
@@ -15,13 +17,21 @@ bot.command('maid', maid())
 
 bot.on('text', async ctx => {
   const { text } = ctx.message
+  
+  const match = text.match(REGEX)
 
-  if (text.startsWith('/prompt')) {
+  if (match) {
+    const command = match[1]
+    const message = match[2]
 
-    const context = text.substring('/prompt'.length).trim()
+    if (command === 'prompt') {
+      await prompt(ctx, message)
+    } else {
+      await unknown(ctx, command)
+    }
 
-    await prompt(ctx, context)
-    
+  } else {
+    await unknown(ctx, text)
   }
 
 })
