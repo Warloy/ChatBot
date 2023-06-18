@@ -1,6 +1,8 @@
 import { Context } from 'telegraf'
 import createDebug from 'debug'
 
+import { request } from '../api'
+
 const debug = createDebug('bot:prompt')
 
 export const prompt = async (ctx: Context, context: string) => {
@@ -15,9 +17,8 @@ export const prompt = async (ctx: Context, context: string) => {
 
   else {
 
-    
-
-    message = `Esta es la respuesta a tu solicitud, ${firstName}:\n\n${context}`
+    const response = await request(context)
+    message = `${firstName}, en respuesta a tu solicitud, ChatGPT dice:\n${response}`
     
   }
 
