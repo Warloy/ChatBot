@@ -7,7 +7,7 @@ export const start = () => async (ctx: Context) => {
 
   const firstName = ctx.message?.from.first_name ?? ''
 
-  const message = `Hello there ${firstName}!`
+  const message = `¡Bienvenido, ${firstName}!\n\nPuedes utilizar el comando /prompt para hacer una solicitud a ChatGPT.\n\nYo me encargaré de traer la respuesta.`
 
   debug(`Triggered "start" command with message: ${message}`)
 

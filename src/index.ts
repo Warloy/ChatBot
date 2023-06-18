@@ -3,7 +3,7 @@ import { VercelRequest, VercelResponse } from '@vercel/node'
 
 import { development, production } from './core'
 
-import { start } from './commands'
+import { start, prompt, maid } from './commands'
 
 const BOT_TOKEN = process.env.BOT_TOKEN ?? ''
 const ENVIRONMENT = process.env.NODE_ENV ?? ''
@@ -11,6 +11,20 @@ const ENVIRONMENT = process.env.NODE_ENV ?? ''
 const bot = new Telegraf(BOT_TOKEN)
 
 bot.command('start', start())
+bot.command('maid', maid())
+
+bot.on('text', async ctx => {
+  const { text } = ctx.message
+
+  if (text.startsWith('/prompt')) {
+
+    const context = text.substring('/prompt'.length).trim()
+
+    await prompt(ctx, context)
+    
+  }
+
+})
 
 const isDevelopment = () => {
   if (ENVIRONMENT !== 'production') {
